@@ -11,5 +11,5 @@ phases:
   commands:
     - docker push 556026884725.dkr.ecr.ap-south-1.amazonaws.com/test:latest
     - printf '[{"name":nginx-deploy,"imageUri":"%s"}]' 556026884725.dkr.ecr.ap-south-1.amazonaws.com/test:latest > image.json
- artifacts:
+artifacts:
   files: image.json

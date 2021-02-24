@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+ pre_build:
+   commands:
+    - $(aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 556026884725.dkr.ecr.ap-south-1.amazonaws.com)
+ build:
+  commands:
+    - docker build -t test:latest .
+    - docker tag test:latest 556026884725.dkr.ecr.ap-south-1.amazonaws.com/test:latest
+ post_build:
+  commands:
+    - docker push 556026884725.dkr.ecr.ap-south-1.amazonaws.com/test:latest
+    - printf '[{"name":nginx-deploy,"imageUri":"%s"}]' 556026884725.dkr.ecr.ap-south-1.amazonaws.com/test:latest > image.json
+ artifacts:
+  files: image.json
